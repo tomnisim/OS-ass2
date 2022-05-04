@@ -6,6 +6,20 @@
 #include "proc.h"
 #include "defs.h"
 
+//added 3 linked lists
+
+//insert to the next of the tail
+//remove the head
+
+struct proc *unused_head;
+struct proc *unused_tail;
+struct proc *sleeping_head;
+struct proc *sleeping_tail;
+struct proc *zombie_head;
+struct proc *zombie_tail;
+
+//lists
+
 struct cpu cpus[NCPU];
 
 struct proc proc[NPROC];
@@ -25,6 +39,9 @@ extern char trampoline[]; // trampoline.S
 // memory model when using p->parent.
 // must be acquired before any p->lock.
 struct spinlock wait_lock;
+
+
+extern uint64 cas(volatile void* addr, int expected, int newval);
 
 // Allocate a page for each process's kernel stack.
 // Map it high in memory, followed by an invalid
@@ -89,10 +106,10 @@ int
 allocpid() {
   int pid;
   
-  acquire(&pid_lock);
+  
   pid = nextpid;
-  nextpid = nextpid + 1;
-  release(&pid_lock);
+  while(cas(&nextpid, pid, pid+1)){
+  }
 
   return pid;
 }
@@ -313,9 +330,50 @@ fork(void)
 
   acquire(&np->lock);
   np->state = RUNNABLE;
+  int cpu_id = get_cpu();
+  add_to_list(cpu_id, np);
+
   release(&np->lock);
 
   return pid;
+}
+
+void 
+add_to_list(int cpu_id, struct proc *p)
+{
+  // struct proc *tail_pointer = cpus[cpu_id].tail_runnable;
+  // struct proc *tail = tail_pointer;
+  // tail->next = p;
+  // tail_pointer = p;
+}
+
+
+
+void 
+remove_from_list(int cpu_id, struct proc *p)
+{
+  // struct proc head_pointer = (cpus[cpu_id]->head_runnable);
+  // struct proc head = &head_pointer;
+  // p->next = head;
+  // head_pointer = p;
+}
+
+
+int 
+get_cpu()
+{
+  struct proc *p = myproc();
+  acquire(&p->lock);
+  int id = -1;
+  id = cpuid();
+  release(&p->lock);
+  return id;
+}
+
+int 
+set_cpu(int cpu_num)
+{
+  return 0;
 }
 
 // Pass p's abandoned children to init.
