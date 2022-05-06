@@ -26,7 +26,6 @@ struct cpu {
   int intena;                 // Were interrupts enabled before push_off()?
 
   struct proc *head_runnable;  //pointer to the head of the runnable proccesses
-  struct proc *tail_runnable;  //pointer to the end of the runnable proccesses
 };
 
 extern struct cpu cpus[NCPU];

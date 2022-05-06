@@ -7,9 +7,15 @@
 
 int main(int argc, int** argv)
 {
-    int cpu_number_for_tom = get_cpu();
-    printf("%d\n", cpu_number_for_tom);
-    printf("working");
+    // int cpu_number_for_tom = get_cpu();
+    // printf("%d\n", cpu_number_for_tom);
+    // printf("working");
+
+    // for (int i=0;i<= 1;i++)
+    
+    fork();
+    // fork();
+    
 
 
     exit(0);

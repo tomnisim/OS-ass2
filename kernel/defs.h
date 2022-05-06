@@ -108,6 +108,9 @@ int             get_cpu(void);
 int             set_cpu(int cpu_num);
 void            add_to_list(int cpu_id, struct proc *p);
 void            remove_from_list(int cpu_id, struct proc *p);
+void            print_cpu_list(int cpu_id);
+void            add_to_global_list(struct proc *head, struct proc *p);
+void            remove_from_global_list(struct proc *head, struct proc *p);
 
 
 // swtch.S
