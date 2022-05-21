@@ -25,6 +25,7 @@ int sleep(int);
 int uptime(void);
 int get_cpu(void);
 int set_cpu(int);
+int cpu_process_count(int);
 
 // ulib.c
 int stat(const char*, struct stat*);

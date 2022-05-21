@@ -13,7 +13,8 @@ int main(int argc, int** argv)
 
     // for (int i=0;i<= 1;i++)
     
-    fork();
+    int num = cpu_process_count(1);
+    printf("%d\n",num);
     // fork();
     
 

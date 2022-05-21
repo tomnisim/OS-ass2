@@ -1765,21 +1765,18 @@ manywrites(char *s)
 {
   int nchildren = 4;
   int howmany = 30; // increase to look for deadlock
-  
   for(int ci = 0; ci < nchildren; ci++){
     int pid = fork();
     if(pid < 0){
       printf("fork failed\n");
       exit(1);
     }
-
     if(pid == 0){
       char name[3];
       name[0] = 'b';
       name[1] = 'a' + ci;
       name[2] = '\0';
       unlink(name);
-      
       for(int iters = 0; iters < howmany; iters++){
         for(int i = 0; i < ci+1; i++){
           int fd = open(name, O_CREATE | O_RDWR);
@@ -1799,11 +1796,12 @@ manywrites(char *s)
       }
 
       unlink(name);
+
       exit(0);
     }
   }
-
   for(int ci = 0; ci < nchildren; ci++){
+
     int st = 0;
     wait(&st);
     if(st != 0)
@@ -2931,3 +2929,4 @@ main(int argc, char *argv[])
     exit(0);
   }
 }
+

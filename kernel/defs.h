@@ -106,12 +106,11 @@ int             either_copyin(void *dst, int user_src, uint64 src, uint64 len);
 void            procdump(void);
 int             get_cpu(void);
 int             set_cpu(int cpu_num);
-void            add_to_list(int cpu_id, struct proc *p);
-void            remove_from_list(int cpu_id, struct proc *p);
-void            print_cpu_list(int cpu_id);
-void            add_to_global_list(struct proc *head, struct proc *p);
-void            remove_from_global_list(struct proc *head, struct proc *p);
-
+void            add_to_list(struct proc *head, struct proc *p);
+void            remove_from_list(struct proc *head, struct proc *p);
+void            print_global_list(struct proc *head);
+int             cpu_process_count(int cpu_num);
+int             get_min_cpu();
 
 // swtch.S
 void            swtch(struct context*, struct context*);

@@ -38,3 +38,4 @@ entry("sleep");
 entry("uptime");
 entry("get_cpu");
 entry("set_cpu");
+entry("cpu_process_count");
